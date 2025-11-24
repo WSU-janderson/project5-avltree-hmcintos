@@ -2,13 +2,33 @@
 
 #include <string>
 
+/**
+ * Empty Constructor. constructs an AVL tree with no parameters. Sets root to null.
+ */
 AVLTree::AVLTree() {
-}
+    root = nullptr;
+    sz = 0;
+    keyIndex = {};
+};
 
+/**
+ *
+ * @return returns a value based off the number of children a node has. Max of 2
+ */
 size_t AVLTree::AVLNode::numChildren() const {
-    return 0;
+    if (left == nullptr && right == nullptr) {
+        return 0;
+    } else if (left != nullptr && right != nullptr) {
+        return 2;
+    } else {
+        return 1;
+    }
 }
 
+/**
+ * CHecks to see if a node is a leaf(Has no children)
+ * @return true if node has no children and False if it does.
+ */
 bool AVLTree::AVLNode::isLeaf() const {
     if (left == nullptr && right == nullptr) {
         return true;
@@ -17,6 +37,10 @@ bool AVLTree::AVLNode::isLeaf() const {
     }
 }
 
+/**
+ * Returns the height of the current Node
+ * @return parameter Height from the Node class.
+ */
 size_t AVLTree::AVLNode::getHeight() const {
     return AVLNode::height;
 }
@@ -71,3 +95,4 @@ bool AVLTree::remove(AVLNode *&current, KeyType key) {
 
 void AVLTree::balanceNode(AVLNode *&node) {
 }
+

@@ -5,6 +5,7 @@
 #ifndef AVLTREE_H
 #define AVLTREE_H
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -41,7 +42,15 @@ public:
 
 
     private:
-    AVLNode* root;
+    AVLNode* root{};
+    size_t sz;
+    vector<AVLNode*> keyIndex;
+
+    size_t size() const {
+        return sz;
+    }
+
+
 
     /* Helper methods for remove */
     // this overloaded remove will do the recursion to remove the node
@@ -50,7 +59,10 @@ public:
     bool removeNode(AVLNode*& current);
     // You will implement this, but it is needed for removeNode()
     void balanceNode(AVLNode*& node);
+    friend std::ostream& operator<<(std::ostream& os, const AVLTree& avlTree);
 
 };
 
 #endif //AVLTREE_H
+
+
