@@ -9,7 +9,30 @@ AVLTree::AVLTree() {
     root = nullptr;
     sz = 0;
     keyIndex = {};
+}
+
+AVLTree::~AVLTree() {
+    if (root != nullptr) {
+    }
+}
+
+bool AVLTree::insert(const std::string &key, size_t value) {
+
+    if (recursiveInsert(root,key,value)) {
+        return true;
+    } else {
+        return false;
+    };
+
+}
+
+bool AVLTree::remove(std::string key) {
+}
+
+bool AVLTree::contains(std::string key) {
 };
+
+
 
 /**
  *
@@ -87,6 +110,22 @@ bool AVLTree::removeNode(AVLNode*& current){
     delete toDelete;
 
     return true;
+}
+
+bool AVLTree::recursiveInsert(AVLNode *&current, const std::string &key, size_t value) {
+    AVLNode* newNode = new AVLNode(key, value);
+    if (current == nullptr) {
+        current = newNode;
+        return true;
+    } else if (value < current->value) {
+        current = current->left;
+        recursiveInsert(current, key, value);
+    } else if (value > current->value) {
+        current = current->right;
+        recursiveInsert(current, key, value);
+    } else {
+        return false;
+    }
 }
 
 bool AVLTree::remove(AVLNode *&current, KeyType key) {

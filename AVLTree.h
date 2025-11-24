@@ -14,6 +14,11 @@ public:
     using KeyType = std::string;
     using ValueType = size_t;
     AVLTree();
+    ~AVLTree();
+    bool insert(const std::string& key, size_t value);
+    bool remove(std::string key);
+    bool contains(std::string key);
+
 protected:
     class AVLNode {
     public:
@@ -23,7 +28,7 @@ protected:
 
         AVLNode* left;
         AVLNode* right;
-        AVLNode(KeyType k, ValueType v) : left(nullptr), right(nullptr), key(k), value(v) {
+        AVLNode(const std::string& k, std::size_t v) : left(nullptr), right(nullptr), key(k), value(v) {
             height = 0;
         };
         // 0, 1 or 2
@@ -32,6 +37,7 @@ protected:
         bool isLeaf() const;
         // number of hops to deepest leaf node
         size_t getHeight() const;
+        size_t size() const;
 
 
     };
@@ -46,9 +52,8 @@ public:
     size_t sz;
     vector<AVLNode*> keyIndex;
 
-    size_t size() const {
-        return sz;
-    }
+    bool recursiveInsert(AVLNode *&current, const std::string& key, size_t value);
+
 
 
 
