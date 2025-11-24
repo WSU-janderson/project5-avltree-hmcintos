@@ -12,7 +12,7 @@ class AVLTree {
 public:
     using KeyType = std::string;
     using ValueType = size_t;
-
+    AVLTree();
 protected:
     class AVLNode {
     public:
@@ -22,7 +22,9 @@ protected:
 
         AVLNode* left;
         AVLNode* right;
-
+        AVLNode(KeyType k, ValueType v) : left(nullptr), right(nullptr), key(k), value(v) {
+            height = 0;
+        };
         // 0, 1 or 2
         size_t numChildren() const;
         // true or false

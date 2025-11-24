@@ -2,16 +2,23 @@
 
 #include <string>
 
+AVLTree::AVLTree() {
+}
+
 size_t AVLTree::AVLNode::numChildren() const {
     return 0;
 }
 
 bool AVLTree::AVLNode::isLeaf() const {
-    return false;
+    if (left == nullptr && right == nullptr) {
+        return true;
+    } else {
+        return false;
+    }
 }
 
 size_t AVLTree::AVLNode::getHeight() const {
-    return 0;
+    return AVLNode::height;
 }
 
 bool AVLTree::removeNode(AVLNode*& current){
