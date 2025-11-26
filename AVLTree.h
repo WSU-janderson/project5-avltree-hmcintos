@@ -19,6 +19,8 @@ public:
     bool remove(std::string key);
     bool contains(std::string key);
 
+
+
 protected:
     class AVLNode {
     public:
@@ -53,6 +55,7 @@ public:
     vector<AVLNode*> keyIndex;
 
     bool recursiveInsert(AVLNode *&current, const std::string& key, size_t value);
+    bool recursiveContains(::AVLTree::AVLNode *&current, std::string key);
 
 
 

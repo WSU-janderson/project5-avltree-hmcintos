@@ -33,7 +33,35 @@ bool AVLTree::remove(std::string key) {
 }
 
 bool AVLTree::contains(std::string key) {
+    if (recursiveContains(root,key)) {
+        return true;
+    } else {
+        return false;
+    }
 };
+
+bool AVLTree::recursiveContains(AVLNode*& current, std::string key) {
+    // base case if no AVL tree
+    if (current == nullptr) {
+        return false;
+    }
+    // if youve found the key end the recursion
+    if (current->key == key) {
+        return true;
+    }
+    // set current to the left most node
+    //if its not null and contains the key then return true
+    if (recursiveContains(current -> left,key)) {
+        return true;
+    }
+    // else set current to the right node and check again
+    if (recursiveContains(current ->right,key)) {
+        return true;
+    }
+    // if none of this is true return false. (Should be redundant but I wanted to be doubly sure I had an exit
+    return false;
+
+}
 
 
 
@@ -118,15 +146,16 @@ bool AVLTree::removeNode(AVLNode*& current){
 bool AVLTree::recursiveInsert(AVLNode*& current, const std::string &key, size_t value) {
     AVLNode* newNode = new AVLNode(key, value);
     if (current == nullptr) {
+
         current = newNode;
         keyIndex.push_back(current);
         return true;
-    } else if (value < current->value) {
+    } else if (key < current->key) {
         current -> height = current->height + 1;
         current = current->left;
         recursiveInsert(current, key, value);
 
-    } else if (value > current->value) {
+    } else if (key > current->key) {
         current -> height = current -> height + 1;
         current = current->right;
         recursiveInsert(current, key, value);
