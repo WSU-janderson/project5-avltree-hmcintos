@@ -44,13 +44,22 @@ bool AVLTree::remove(std::string key) {
  * @param key The String key that we are looking for within the AVL tree
  * @return true if it exists false if it doesnt
  */
-bool AVLTree::contains(std::string key) {
+bool AVLTree::contains(const std::string key) const{
     if (recursiveContains(root,key)) {
         return true;
     } else {
         return false;
     }
+}
+
+std::optional<size_t> AVLTree::get( const std::string key) const {
+    if (contains(key)) {
+
+    }
+    return recursiveGet(root,key);
+
 };
+
 
 /**
  * Recursively Checks to see if an AVL tree contains a key
@@ -59,32 +68,64 @@ bool AVLTree::contains(std::string key) {
  * @return true if the key exists within the tree. False if the key does not
  *
  */
-bool AVLTree::recursiveContains(AVLNode*& current, std::string key) {
+bool AVLTree::recursiveContains(AVLNode* current, std::string key) const {
     // base case if no AVL tree
     if (current == nullptr) {
         return false;
     }
-    // if youve found the key end the recursion
-    if (current->key == key) {
-        return true;
-    }
-    // set current to the left most node
-    //if its not null and contains the key then return true
-    if (recursiveContains(current -> left,key)) {
-        return true;
-    }
-    // else set current to the right node and check again
-    if (recursiveContains(current ->right,key)) {
-        return true;
-    }
-    // if none of this is true return false. (Should be redundant but I wanted to be doubly sure I had an exit
-    return false;
 
+    if (key > current->key) { //check right
+        current = current -> left;
+        return recursiveContains(current, key);
+    } else if (key < current->key) { //check left
+        current = current -> right;
+        return recursiveContains(current, key);
+    } else if (key == current ->key) { // else the key is found
+        return true;
+    } else {
+        return false;
+    };
+    // if none of this is true return false. (Should be redundant but I wanted to be doubly sure I had an exit
+
+
+}
+
+/**
+ * Recursively Checks for a key value within the tree. If it fings id we return the value associated with that key
+ * @param current a pointer to the current node we are in the tree
+ * @param key the string key value we are looking for
+ * @return the size_t value that is associated with our key or Nullopt if it failed to find
+ *
+ */
+std::optional<size_t> AVLTree::recursiveGet(const AVLTree::AVLNode *current, std::string key) const{
+
+    std::optional<size_t> returnedValue = 0;
+    if (current == nullptr) {
+        returnedValue = nullopt;
+        return returnedValue;
+    }
+    //Hunt down the Value by leveraging the BST aspect of an AVL tree
+    if (key > current->key) { //check right
+        current = current -> left;
+        return recursiveGet(current, key);
+    } else if (key < current->key) { //check left
+        current = current -> right;
+        return recursiveGet(current, key);
+    } else if (key == current ->key) { // else the key is found
+        returnedValue = current->value;
+        return returnedValue;
+    } else {
+        return nullopt;
+    };
 }
 
 
 size_t AVLTree::AVLNode::getHeight() const {
-    return 0;
+    if (isLeaf()) {
+        return 0;
+    }else {
+        return 1 + std::max(AVLNode::getHeight(),AVLNode::getHeight() + 1);
+    }
 }
 
 /**

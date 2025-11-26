@@ -4,6 +4,7 @@
 
 #ifndef AVLTREE_H
 #define AVLTREE_H
+#include <optional>
 #include <string>
 #include <vector>
 
@@ -17,13 +18,12 @@ public:
     ~AVLTree();
     bool insert(const std::string& key, size_t value);
     bool remove(std::string key);
-    bool contains(std::string key);
+    bool contains(std::string key) const ;
+    std::optional<size_t> get(std::string key) const;
 
     size_t getHeight() const;
 
     size_t size() const;
-
-
 
 protected:
     class AVLNode {
@@ -37,6 +37,7 @@ protected:
         AVLNode(const std::string& k, std::size_t v) : left(nullptr), right(nullptr), key(k), value(v) {
             height = 0;
         };
+
         size_t getHeight() const;
         // 0, 1 or 2
         size_t numChildren() const;
@@ -59,8 +60,8 @@ public:
     vector<AVLNode*> keyIndex;
 
     bool recursiveInsert(AVLNode *&current, const std::string& key, size_t value);
-    bool recursiveContains(::AVLTree::AVLNode *&current, std::string key);
-
+    bool recursiveContains(::AVLTree::AVLNode *current, std::string key) const;
+    std::optional<size_t> recursiveGet( const AVLTree::AVLNode *current, std::string key) const;
 
 
 
