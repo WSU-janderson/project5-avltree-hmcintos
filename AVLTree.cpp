@@ -16,6 +16,12 @@ AVLTree::~AVLTree() {
     }
 }
 
+/**
+ * Recursively inserts a key value pair into the AVL tree
+ * @param key A string value that represents the key or index of our map
+ * @param value a size_t value which is stored in connction to our key
+ * @return returns true if it was inserted false if there is a duplicate
+ */
 bool AVLTree::insert(const std::string &key, size_t value) {
 
     if (recursiveInsert(root,key,value)) {
@@ -30,8 +36,14 @@ bool AVLTree::insert(const std::string &key, size_t value) {
 }
 
 bool AVLTree::remove(std::string key) {
+    return false;
 }
 
+/**
+ * Runs a recursive check to find a key within the AVL tree
+ * @param key The String key that we are looking for within the AVL tree
+ * @return true if it exists false if it doesnt
+ */
 bool AVLTree::contains(std::string key) {
     if (recursiveContains(root,key)) {
         return true;
@@ -40,6 +52,13 @@ bool AVLTree::contains(std::string key) {
     }
 };
 
+/**
+ * Recursively Checks to see if an AVL tree contains a key
+ * @param current The current node in the tree we are looking at
+ * @param key The key we are searching for
+ * @return true if the key exists within the tree. False if the key does not
+ *
+ */
 bool AVLTree::recursiveContains(AVLNode*& current, std::string key) {
     // base case if no AVL tree
     if (current == nullptr) {
@@ -64,6 +83,9 @@ bool AVLTree::recursiveContains(AVLNode*& current, std::string key) {
 }
 
 
+size_t AVLTree::AVLNode::getHeight() const {
+    return 0;
+}
 
 /**
  *
@@ -95,8 +117,16 @@ bool AVLTree::AVLNode::isLeaf() const {
  * Returns the height of the current Node
  * @return parameter Height from the Node class.
  */
-size_t AVLTree::AVLNode::getHeight() const {
-    return AVLNode::height;
+size_t AVLTree::getHeight() const {
+    if (root == nullptr) {
+        return 0;
+    } else {
+        return root -> height;
+    }
+}
+
+size_t AVLTree::size() const {
+    return sz;
 }
 
 bool AVLTree::removeNode(AVLNode*& current){
@@ -143,12 +173,20 @@ bool AVLTree::removeNode(AVLNode*& current){
     return true;
 }
 
+/**
+ * Inserts a key value pair into the tree using recursion to find where it needs to fit.
+ * @param current
+ * @param key
+ * @param value
+ * @return
+ */
 bool AVLTree::recursiveInsert(AVLNode*& current, const std::string &key, size_t value) {
     AVLNode* newNode = new AVLNode(key, value);
     if (current == nullptr) {
 
         current = newNode;
         keyIndex.push_back(current);
+        sz++;
         return true;
     } else if (key < current->key) {
         current -> height = current->height + 1;

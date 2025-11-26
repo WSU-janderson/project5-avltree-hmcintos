@@ -19,6 +19,10 @@ public:
     bool remove(std::string key);
     bool contains(std::string key);
 
+    size_t getHeight() const;
+
+    size_t size() const;
+
 
 
 protected:
@@ -33,13 +37,13 @@ protected:
         AVLNode(const std::string& k, std::size_t v) : left(nullptr), right(nullptr), key(k), value(v) {
             height = 0;
         };
+        size_t getHeight() const;
         // 0, 1 or 2
         size_t numChildren() const;
         // true or false
         bool isLeaf() const;
         // number of hops to deepest leaf node
-        size_t getHeight() const;
-        size_t size() const;
+
 
 
     };

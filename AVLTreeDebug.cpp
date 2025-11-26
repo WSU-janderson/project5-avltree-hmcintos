@@ -14,14 +14,19 @@ using namespace std;
 int main() {
     AVLTree tree;
     bool insertResult;
+    cout << "Size: "<< tree.size() << endl;
     insertResult = tree.insert("F", 'F');
     cout << insertResult << endl;
     cout << tree.contains("G") << endl;
+    cout << "Size: "<< tree.size() << endl;
     insertResult = tree.insert("F", 'F'); // false, no duplicates allowed
-    // cout << insertResult << endl;
-    // insertResult = tree.insert("K", 'K');
-    // cout << insertResult << endl;
-    // insertResult = tree.insert("X", 'X');// single rotate left
+    cout << insertResult << endl;
+    insertResult = tree.insert("K", 'K');
+    cout << "Size: "<< tree.size() << endl;
+    cout << insertResult << endl;
+    insertResult = tree.insert("X", 'X');// single rotate left
+    cout << insertResult << endl;
+    cout << "Size: "<< tree.size() << endl;
     // cout << insertResult << endl;
     // cout << endl << endl;
     // cout << tree << endl;
