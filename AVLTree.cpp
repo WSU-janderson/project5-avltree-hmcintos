@@ -19,6 +19,9 @@ AVLTree::~AVLTree() {
 bool AVLTree::insert(const std::string &key, size_t value) {
 
     if (recursiveInsert(root,key,value)) {
+        //assess balance
+        //rotate if necesasry
+        //double rotate if necessary
         return true;
     } else {
         return false;
@@ -112,20 +115,25 @@ bool AVLTree::removeNode(AVLNode*& current){
     return true;
 }
 
-bool AVLTree::recursiveInsert(AVLNode *&current, const std::string &key, size_t value) {
+bool AVLTree::recursiveInsert(AVLNode*& current, const std::string &key, size_t value) {
     AVLNode* newNode = new AVLNode(key, value);
     if (current == nullptr) {
         current = newNode;
+        keyIndex.push_back(current);
         return true;
     } else if (value < current->value) {
+        current -> height = current->height + 1;
         current = current->left;
         recursiveInsert(current, key, value);
+
     } else if (value > current->value) {
+        current -> height = current -> height + 1;
         current = current->right;
         recursiveInsert(current, key, value);
     } else {
         return false;
     }
+    return true;
 }
 
 bool AVLTree::remove(AVLNode *&current, KeyType key) {
