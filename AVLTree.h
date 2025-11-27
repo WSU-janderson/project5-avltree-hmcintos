@@ -21,6 +21,10 @@ public:
     bool contains(std::string key) const ;
     std::optional<size_t> get(std::string key) const;
 
+    void clearKeyIndex();
+
+    std::vector<std::string> keys() const;
+
     size_t getHeight() const;
 
     size_t size() const;
@@ -39,6 +43,9 @@ protected:
         };
 
         size_t getHeight() const;
+
+
+
         // 0, 1 or 2
         size_t numChildren() const;
         // true or false
@@ -57,11 +64,13 @@ public:
     private:
     AVLNode* root{};
     size_t sz;
-    vector<AVLNode*> keyIndex;
+    vector<string> keyIndex;
 
     bool recursiveInsert(AVLNode *&current, const std::string& key, size_t value);
     bool recursiveContains(::AVLTree::AVLNode *current, std::string key) const;
     std::optional<size_t> recursiveGet( const AVLTree::AVLNode *current, std::string key) const;
+    std::vector<std::string> recursiveKeys(const AVLNode *current,std::vector<string> keys) const;
+
 
 
 

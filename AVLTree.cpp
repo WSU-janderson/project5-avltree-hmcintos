@@ -128,6 +128,40 @@ size_t AVLTree::AVLNode::getHeight() const {
     }
 }
 
+void AVLTree::clearKeyIndex() {
+    keyIndex.clear();
+}
+
+std::vector<std::string> AVLTree::keys() const {
+    std::vector<std::string> keys={};
+    if (root != nullptr) {
+        return recursiveKeys(root,keys);
+    }
+}
+
+std::vector<std::string> AVLTree::recursiveKeys(const AVLNode* current, std::vector<string> keys) const {
+    std::vector<std::string> returnedKeys;
+    returnedKeys.push_back( current-> key);
+    if (current->isLeaf()) {
+        keys.insert(keys.end(),returnedKeys.begin(),returnedKeys.end());
+        return keys;
+    }
+    //lefts
+    if (current->left != nullptr) {
+        std::vector<string> tempKeys = recursiveKeys(current->left,keys);
+        returnedKeys.insert(returnedKeys.end(),tempKeys.begin(),tempKeys.end());
+    }
+    //rights
+    if (current->right != nullptr) {
+        std::vector<string> tempKeys = recursiveKeys(current->right,keys);
+        returnedKeys.insert(returnedKeys.end(),tempKeys.begin(),tempKeys.end());
+    }
+    keys.insert(keys.end(),returnedKeys.begin(),returnedKeys.end());
+    //return keys
+    return keys;
+
+
+}
 /**
  *
  * @return returns a value based off the number of children a node has. Max of 2
@@ -226,16 +260,25 @@ bool AVLTree::recursiveInsert(AVLNode*& current, const std::string &key, size_t 
     if (current == nullptr) {
 
         current = newNode;
-        keyIndex.push_back(current);
         sz++;
         return true;
-    } else if (key < current->key) {
+    }
+    if (key < current->key) {
         current -> height = current->height + 1;
+        if (current -> left == nullptr) {
+            current -> left = newNode;
+            sz++;
+            return true;
+        }
         current = current->left;
         recursiveInsert(current, key, value);
-
     } else if (key > current->key) {
         current -> height = current -> height + 1;
+        if (current -> right == nullptr) {
+            current -> right = newNode;
+            sz++;
+            return true;
+        }
         current = current->right;
         recursiveInsert(current, key, value);
     } else {

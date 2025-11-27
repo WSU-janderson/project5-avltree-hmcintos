@@ -13,20 +13,16 @@ using namespace std;
 
 int main() {
     AVLTree tree;
+    std::vector<string> keys = {};
     bool insertResult;
     insertResult = tree.insert("F", 'F');
-    cout << insertResult << endl;
-    insertResult = tree.insert("F", 'F'); // false, no duplicates allowed
-    cout << insertResult << endl;
+    //insertResult = tree.insert("F", 'F'); // false, no duplicates allowed
     insertResult = tree.insert("K", 'K');
-    cout << insertResult << endl;
     insertResult = tree.insert("X", 'X');// single rotate left
-    cout << insertResult << endl;
-    std:optional<size_t> val = tree.get("F");
-    printf("%zu",val);
-    cout << endl;
-    val = 'F';
-    printf("%zu",val);
+    keys = tree.keys();
+    for (string key : keys) {
+        cout << key << endl;
+    }
 
     // cout << endl << endl;
     // cout << tree << endl;
